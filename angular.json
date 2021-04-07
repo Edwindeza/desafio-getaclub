@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "reto01"
+    }
+  },
+  "defaultProject": "reto01",
+  "cli": {
+    "analytics": "5e7dd4bc-4d3e-4085-8ee5-3082a0c56b30"
+  }
 }
