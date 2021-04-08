@@ -1,0 +1,16 @@
+export interface Register {
+    namesForm:string,
+    surnameForm:string,
+    lastnameForm:string,
+    nationalityForm:string,
+    bornForm: Date,
+    CeduleForm:string,
+    dateIssueForm:Date,
+    expirationDateForm:Date,
+    emailForm:string,
+    phoneForm:string,
+    temperatureForm:string,
+    presionForm:string,
+    saturationForm:string,
+    bloodTypeForm:string,
+}

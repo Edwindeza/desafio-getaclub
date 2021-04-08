@@ -1,0 +1,161 @@
+
+<div class="container">
+  <div class="redirect">
+    <button [routerLink]="'/dashboard'"> Ir a dashboard </button>
+  </div>
+  <div class="form">
+    <h1>Registro COVID - 2021</h1>
+    <form class="registerForm" name="registerForm" [formGroup]="registerPersonForm" (ngSubmit)="onSubmitRegister()">
+      <h2>
+        Datos personales
+      </h2>
+      <div class="persona-information">
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Nombres" formControlName="namesForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['namesForm'].hasError('required')">
+                Ingrese sus <strong>nombres.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Apellido Paterno" formControlName="surnameForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['surnameForm'].hasError('required')">
+                Ingrese su <strong>apellido materno.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Apellido Materno" formControlName="lastnameForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['lastnameForm'].hasError('required')">
+                Ingrese su <strong>apellido materno.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Nacionalidad" formControlName="nationalityForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['nationalityForm'].hasError('required')">
+                Ingrese su <strong>nacionalidad.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+              <input matInput placeholder="Fecha de nacimiento" formControlName="bornForm" name="dateBorn" [formControl]="registerPersonForm.controls['bornForm']"  [matDatepicker]="picker" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker color="#163164"></mat-datepicker>
+              <mat-error *ngIf="registerPersonForm.controls['bornForm'].hasError('required')">
+                  Ingrese
+                  <strong>fecha de nacimiento.</strong>
+              </mat-error>
+          </mat-form-field>
+        </div>
+      
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Número de cédula" formControlName="CeduleForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['CeduleForm'].hasError('required')">
+                Ingrese su <strong>número de cédula.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+              <input matInput placeholder="Fecha de emisión de cédula" formControlName="dateIssueForm" name="dateIssueForm" [formControl]="registerPersonForm.controls['dateIssueForm']" [matDatepicker]="pickerIssue" required>
+              <mat-datepicker-toggle matSuffix [for]="pickerIssue"></mat-datepicker-toggle>
+              <mat-datepicker #pickerIssue color="#163164"></mat-datepicker>
+              <mat-error *ngIf="registerPersonForm.controls['dateIssueForm'].hasError('required')">
+                Ingrese
+                  <strong>fecha de emisión.</strong>
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+              <input matInput placeholder="Fecha de vencimiento de cédula" formControlName="expirationDateForm" name="expirationDateForm" [formControl]="registerPersonForm.controls['expirationDateForm']" [matDatepicker]="pickerExpiration" required>
+              <mat-datepicker-toggle matSuffix [for]="pickerExpiration"></mat-datepicker-toggle>
+              <mat-datepicker #pickerExpiration color="#163164"></mat-datepicker>
+              <mat-error *ngIf="registerPersonForm.controls['expirationDateForm'].hasError('required')">
+                  Ingrese 
+                  <strong>fecha de vencimiento.</strong>
+              </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Correo" formControlName="emailForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['emailForm'].hasError('required')">
+                Ingrese su <strong>correo.</strong>
+            </mat-error>
+            <mat-error *ngIf="registerPersonForm.controls['emailForm'].hasError('pattern')">
+                Ingrese un formato de correo <strong>válido.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Celular" formControlName="phoneForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['phoneForm'].hasError('required')">
+                Ingrese su <strong>celular.</strong>
+            </mat-error>
+            <mat-error *ngIf="registerPersonForm.controls['phoneForm'].hasError('minLength') || registerPersonForm.controls['phoneForm'].hasError('maxLength')">
+                Debe tener exactamente 9 <strong>dígitos.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <h2>
+        Datos Médicos
+      </h2>
+      <div class="medical-information">
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Temperatura" formControlName="temperatureForm" name="document" type="number" [min]="36" required>
+            <mat-error *ngIf="registerPersonForm.controls['temperatureForm'].hasError('required')">
+                Ingrese su <strong>temperatura.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Presión arterial" formControlName="presionForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['presionForm'].hasError('required')">
+                Ingrese su <strong>presión arterial.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Saturación de oxígeno" formControlName="saturationForm" name="document" type="number" required>
+            <mat-error *ngIf="registerPersonForm.controls['saturationForm'].hasError('required')">
+                Ingrese su <strong>saturación de oxígeno.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-group">
+          <mat-form-field class="demo-input">
+            <input matInput placeholder="Tipo de sangre" formControlName="bloodTypeForm" name="document" type="text" required>
+            <mat-error *ngIf="registerPersonForm.controls['bloodTypeForm'].hasError('required')">
+                Ingrese su <strong>Tipo de sangre.</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="submit-btn">
+        <button class="demo-button" mat-flat-button type="submit">REGISTRAR CASO</button>
+      </div>
+    </form>
+  </div>
+  
+</div>
