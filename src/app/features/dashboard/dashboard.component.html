@@ -1,1 +1,61 @@
-<p>dashboard works!</p>
+<div class="container">
+  <div class="redirect">
+    <button [routerLink]="'/registro'"> Ir a registro </button>
+    <button (click)="changeShowData()">{{ showAllData ? 'Mostrar: En Riesgo' : 'Mostrar: Todos'}}</button>
+  </div>
+  <div class="count">
+    <p>
+      Pacientes en riesgo: <b> {{filterDataRegister.length}} </b>
+    </p>
+  </div>
+  <div class="table">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="CeduleForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> N° de Cédula </th>
+        <td mat-cell *matCellDef="let element"> {{element.CeduleForm}} </td>
+      </ng-container>
+    
+      <!-- Position Column -->
+      <ng-container matColumnDef="namesForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+        <td mat-cell *matCellDef="let element"> {{element.namesForm}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="surnameForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> A. Paterno </th>
+        <td mat-cell *matCellDef="let element"> {{element.surnameForm}} </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="lastnameForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> A. Materno </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastnameForm}} </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="temperatureForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperatura </th>
+        <td mat-cell *matCellDef="let element"> {{element.temperatureForm}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="emailForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+        <td mat-cell *matCellDef="let element"> {{element.emailForm}} </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="phoneForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </th>
+        <td mat-cell *matCellDef="let element"> {{element.phoneForm}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+    </table>
+  </div>
+</div>

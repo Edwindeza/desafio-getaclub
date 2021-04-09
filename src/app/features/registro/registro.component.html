@@ -5,7 +5,7 @@
   </div>
   <div class="form">
     <h1>Registro COVID - 2021</h1>
-    <form class="registerForm" name="registerForm" [formGroup]="registerPersonForm" (ngSubmit)="onSubmitRegister()">
+    <form class="registerForm" name="registerForm" [formGroup]="registerPersonForm" (ngSubmit)="onSubmitRegister()" #formDirective="ngForm">
       <h2>
         Datos personales
       </h2>
@@ -108,8 +108,8 @@
             <mat-error *ngIf="registerPersonForm.controls['phoneForm'].hasError('required')">
                 Ingrese su <strong>celular.</strong>
             </mat-error>
-            <mat-error *ngIf="registerPersonForm.controls['phoneForm'].hasError('minLength') || registerPersonForm.controls['phoneForm'].hasError('maxLength')">
-                Debe tener exactamente 9 <strong>dígitos.</strong>
+            <mat-error *ngIf="registerPersonForm.controls['phoneForm'].hasError('notPhone') ">
+                Debe tener <strong>9 dígitos.</strong>
             </mat-error>
           </mat-form-field>
         </div>
@@ -153,6 +153,7 @@
         </div>
       </div>
       <div class="submit-btn">
+        <button class="demo-button"  (click)="clearForm()" type="button">LIMPIAR</button>
         <button class="demo-button" mat-flat-button type="submit">REGISTRAR CASO</button>
       </div>
     </form>

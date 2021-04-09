@@ -1,9 +1,4 @@
 .container{
-  margin: auto;
-  padding: 30px;
-  @media(min-width: 1200px){
-    max-width: 1200px;
-  }
   .redirect{
     text-align: right;
     padding-bottom: 30px;
@@ -68,6 +63,7 @@
       }
       .submit-btn{
         text-align: center;
+        padding-top: 30px;
         .demo-button{
           border-radius: 5px;
           border: 0;
@@ -79,8 +75,19 @@
           background-color: #b349aa ;
           color: white;
           font-weight: bold;
+          outline: none;
+          margin-bottom: 15px;
+          width: 100%;
           &:hover{
             background-color: #ab0d9d ;
+          }
+          &:focus{
+            border: 0;
+          }
+          @media(min-width:450px){
+            width: fit-content;
+            margin-left: 15px;
+            margin-right: 15px;
           }
         }
       }

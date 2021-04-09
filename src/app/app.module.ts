@@ -13,7 +13,9 @@ import { RegistroComponent } from './features/registro/registro.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,8 +37,15 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
     ReactiveFormsModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule,
+    MatSortModule,
+    MatSnackBarModule,
   ],
+  exports: [
+
+  ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })

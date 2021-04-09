@@ -1,0 +1,81 @@
+.container{
+  .redirect{
+    text-align: right;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    button{
+      border-radius: 5px;
+      border: 0;
+      height: 56px;
+      padding-left: 15px;
+      padding-right: 15px;
+      cursor: pointer;
+      transition: 0.5s;
+      background-color: #b349aa ;
+      color: white;
+      font-weight: bold;
+      outline: none;
+      @media(min-width:375px){
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      &:hover{
+        background-color: #ab0d9d ;
+      }
+    }
+  }
+  .count{
+    text-align: right;
+    p{
+      font-size: 16px;
+    }
+  }
+  .table{
+    width: 100%;
+    overflow-x: auto;
+    /* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
+    &::-webkit-scrollbar {
+      width: 8px;     /* Tamaño del scroll en vertical */
+      height: 8px;    /* Tamaño del scroll en horizontal */
+      // display: none;  /* Ocultar scroll */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    
+    /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #b3b3b3;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Cambiamos el fondo cuando esté en active */
+    &::-webkit-scrollbar-thumb:active {
+        background-color: #999999;
+    }
+    /* Ponemos un color de fondo y redondeamos las esquinas del track */
+    &::-webkit-scrollbar-track {
+      background: #e1e1e1;
+      border-radius: 4px;
+    }
+
+    /* Cambiamos el fondo cuando esté en active o hover */
+    &::-webkit-scrollbar-track:hover,
+    &::-webkit-scrollbar-track:active {
+      background: #d4d4d4;
+    }
+    table{
+      width: 100%;
+      min-width: 700px;
+      margin-bottom: 10px;
+      box-shadow: none;
+      th{
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+    }
+  }
+}

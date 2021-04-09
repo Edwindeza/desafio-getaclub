@@ -9,7 +9,7 @@ export interface Register {
     expirationDateForm:Date,
     emailForm:string,
     phoneForm:string,
-    temperatureForm:string,
+    temperatureForm:number,
     presionForm:string,
     saturationForm:string,
     bloodTypeForm:string,

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators, NgForm, ValidatorFn} from '@angular/forms';
 import { Register } from '@core/interfaces/register';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EMAIL_REGEX } from '@core/consts/regex';
 
 // Expresión regular para el correo
-const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
   selector: 'app-registro',
@@ -16,10 +17,13 @@ export class RegistroComponent implements OnInit {
   registerPersonForm: FormGroup;
   //Loader
   activeloadingfull = false;
+  // Arreglo tipado de Registers
   dataRegisters: Array<Register> = []
+  @ViewChild('formDirective') private formDirective: NgForm;
 
   constructor(
     public formB: FormBuilder,
+    public snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -49,9 +53,12 @@ export class RegistroComponent implements OnInit {
 
       Además tambien pediremos información médica como:
       - Temperatura
+      - Presión
+      - Saturación
+      - Tipo de sangre
     */
 
-    this.registerPersonForm = this.formB.group({
+    this.registerPersonForm = new FormGroup({
       namesForm: new FormControl('', [
         Validators.required
       ]),
@@ -61,7 +68,7 @@ export class RegistroComponent implements OnInit {
       lastnameForm: new FormControl('', [
         Validators.required
       ]),
-      nationalityForm: new FormControl('CHILENA', [
+      nationalityForm: new FormControl('', [
         Validators.required
       ]),
       bornForm: new FormControl('', [
@@ -82,8 +89,8 @@ export class RegistroComponent implements OnInit {
       ]),
       phoneForm: new FormControl('', [
         Validators.required,
-        Validators.minLength(9),
-        Validators.maxLength(9)
+        // Agregamos una validación personalizada al celular para asegurar 9 caráctener en el número de teléfono
+        this.ValidatePhone
       ]),
       temperatureForm: new FormControl('', [
         Validators.required
@@ -101,71 +108,64 @@ export class RegistroComponent implements OnInit {
     });
   }
   onSubmitRegister(): void {
-    // Obtenemos la data de local storage
-    let tempDataRegister = localStorage.getItem('dataRegisters')
+    // Verificamos si el formulario es válido
+    if(this.registerPersonForm.valid){
+      // Obtenemos la data de local storage
+      let tempDataRegister = localStorage.getItem('dataRegisters')
 
-    //Inicializamos el arreglo en base a si hay data o no
-    if(tempDataRegister){
-      this.dataRegisters = JSON.parse(tempDataRegister)
+      //Inicializamos el arreglo en base a si hay data o no
+      if(tempDataRegister){
+        this.dataRegisters = JSON.parse(tempDataRegister)
+      }else{
+        this.dataRegisters = []
+      }
+      // Inicializamos una variable temporal con la información del formulario
+      let tempData: Register = {
+        namesForm: this.registerPersonForm.controls['namesForm'].value,
+        surnameForm: this.registerPersonForm.controls['surnameForm'].value,
+        lastnameForm: this.registerPersonForm.controls['lastnameForm'].value,
+        nationalityForm: this.registerPersonForm.controls['nationalityForm'].value,
+        bornForm: this.registerPersonForm.controls['bornForm'].value,
+        CeduleForm: this.registerPersonForm.controls['CeduleForm'].value,
+        dateIssueForm: this.registerPersonForm.controls['dateIssueForm'].value,
+        expirationDateForm: this.registerPersonForm.controls['expirationDateForm'].value,
+        emailForm: this.registerPersonForm.controls['emailForm'].value,
+        phoneForm: this.registerPersonForm.controls['phoneForm'].value,
+        temperatureForm: this.registerPersonForm.controls['temperatureForm'].value,
+        presionForm: this.registerPersonForm.controls['presionForm'].value,
+        saturationForm: this.registerPersonForm.controls['saturationForm'].value,
+        bloodTypeForm: this.registerPersonForm.controls['bloodTypeForm'].value,
+      };
+      // Pusheamos la información en el arreglo declarado previamente
+      this.dataRegisters.push(tempData)
+      // Guardamos en local storage
+      localStorage.setItem('dataRegisters', JSON.stringify(this.dataRegisters));
+      // Finalmente, limpiamos el formulario
+      this.clearForm();
     }else{
-      this.dataRegisters = []
+      this.snackBar.open('Debe llenar correctamente el formulario', 'ok', {
+        duration: 2000,
+      });
     }
-    // Inicializamos una variable temporal con la información del formulario
-    let tempData: Register = {
-      namesForm: this.registerPersonForm.controls['namesForm'].value,
-      surnameForm: this.registerPersonForm.controls['surnameForm'].value,
-      lastnameForm: this.registerPersonForm.controls['lastnameForm'].value,
-      nationalityForm: this.registerPersonForm.controls['nationalityForm'].value,
-      bornForm: this.registerPersonForm.controls['bornForm'].value,
-      CeduleForm: this.registerPersonForm.controls['CeduleForm'].value,
-      dateIssueForm: this.registerPersonForm.controls['dateIssueForm'].value,
-      expirationDateForm: this.registerPersonForm.controls['expirationDateForm'].value,
-      emailForm: this.registerPersonForm.controls['emailForm'].value,
-      phoneForm: this.registerPersonForm.controls['phoneForm'].value,
-      temperatureForm: this.registerPersonForm.controls['temperatureForm'].value,
-      presionForm: this.registerPersonForm.controls['presionForm'].value,
-      saturationForm: this.registerPersonForm.controls['saturationForm'].value,
-      bloodTypeForm: this.registerPersonForm.controls['bloodTypeForm'].value,
-    };
-    // Pusheamos la información en el arreglo declarado previamente
-    this.dataRegisters.push(tempData)
-    // Guardamos en local storage
-    localStorage.setItem('dataRegisters', JSON.stringify(this.dataRegisters));
-    // Finalmente, limpiamos el formulario
-    this.clearForm();
+    
   }
   clearForm(): void{
-    this.registerPersonForm.reset();
-    this.registerPersonForm.controls['namesForm'].clearValidators();
-    this.registerPersonForm.controls['namesForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['surnameForm'].clearValidators();
-    this.registerPersonForm.controls['surnameForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['lastnameForm'].clearValidators();
-    this.registerPersonForm.controls['lastnameForm'].updateValueAndValidity();
-
-    this.registerPersonForm.controls['nationalityForm'].setValue('CHILENA')
-    // this.registerPersonForm.controls['nationalityForm'].clearValidators(); este no se limpia.
-    // this.registerPersonForm.controls['nationalityForm'].updateValueAndValidity(); este no se limpia.
-    this.registerPersonForm.controls['bornForm'].clearValidators();
-    this.registerPersonForm.controls['bornForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['CeduleForm'].clearValidators();
-    this.registerPersonForm.controls['CeduleForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['dateIssueForm'].clearValidators();
-    this.registerPersonForm.controls['dateIssueForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['expirationDateForm'].clearValidators();
-    this.registerPersonForm.controls['expirationDateForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['emailForm'].clearValidators();
-    this.registerPersonForm.controls['emailForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['phoneForm'].clearValidators();
-    this.registerPersonForm.controls['phoneForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['temperatureForm'].clearValidators();
-    this.registerPersonForm.controls['temperatureForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['presionForm'].clearValidators();
-    this.registerPersonForm.controls['presionForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['saturationForm'].clearValidators();
-    this.registerPersonForm.controls['saturationForm'].updateValueAndValidity();
-    this.registerPersonForm.controls['bloodTypeForm'].clearValidators();
-    this.registerPersonForm.controls['bloodTypeForm'].updateValueAndValidity();
-
+    this.formDirective.resetForm();
+  }
+  ValidatePhone(control: FormControl): { [key: string]: boolean } | null {
+    // Si hay alguna cadena 
+    var regex =  new RegExp(/[0-9]{9}/);
+    if (control.value && control.value.length > 0) {
+      var tempValue = control.value.replace(/\s/g, "")
+      var posNight = tempValue.indexOf('9');
+      var tempPhone = tempValue.slice(posNight, tempValue.length).trim();
+      if(tempPhone.length != 9 || !regex.test(tempPhone)){
+        return { 'notPhone': true }
+      }else{
+        return null;
+      }
+    }else{
+      return null;
+    }
   }
 }
