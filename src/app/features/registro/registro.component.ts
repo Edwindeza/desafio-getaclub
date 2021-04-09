@@ -142,6 +142,9 @@ export class RegistroComponent implements OnInit {
       localStorage.setItem('dataRegisters', JSON.stringify(this.dataRegisters));
       // Finalmente, limpiamos el formulario
       this.clearForm();
+      this.snackBar.open('Registro completo', 'ok', {
+        duration: 2000,
+      });
     }else{
       this.snackBar.open('Debe llenar correctamente el formulario', 'ok', {
         duration: 2000,

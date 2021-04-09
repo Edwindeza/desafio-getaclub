@@ -14,10 +14,10 @@ import { Register } from '@core/interfaces/register';
 export class DashboardComponent implements OnInit,AfterViewInit  {
 
   // Variables para la tabla de material
-  displayedColumns: string[] = ['CeduleForm','namesForm', 'surnameForm', 'lastnameForm', 'temperatureForm', 'emailForm', 'phoneForm'];
+  displayedColumns: string[] = ['CeduleForm','namesForm', 'surnameForm', 'lastnameForm', 'emailForm', 'phoneForm', 'temperatureForm'];
 
   // Arreglo tipado de Registers
-  dataRegisters: Array<Register> = []
+  dataRegisters: Array<Register> = [];
 
   // Data de la tabla
   dataSource;
@@ -26,6 +26,9 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
   // Variable de control para la información en la tabla
   showAllData = false;
   
+  // Total de pacientes en riesgo
+  totalRiskregister = 0;
+
   constructor(
   ) { }
 
@@ -41,13 +44,14 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
 
   initData(): void{
     // Obtenemos la data de local storage
-    let tempDataRegister = localStorage.getItem('dataRegisters')
+    let tempDataRegister = localStorage.getItem('dataRegisters');
     
     //Inicializamos el arreglo en base a si hay data o no
     if(tempDataRegister){
       this.dataRegisters = JSON.parse(tempDataRegister)
       //Filtramos los que tengan temp mayor a 37°
       this.filterDataRegister = this.dataRegisters.filter( register => register.temperatureForm > 37);
+      this.totalRiskregister = this.filterDataRegister.length;
     }else{
       this.dataRegisters = [];
       this.filterDataRegister = [];
@@ -63,7 +67,7 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     
     // Filtramos la información según la variable de control
     if(this.showAllData){
-      this.filterDataRegister = this.dataRegisters
+      this.filterDataRegister = this.dataRegisters;
     }
     else{
       this.filterDataRegister = this.dataRegisters.filter( register => register.temperatureForm > 37);

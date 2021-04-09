@@ -76,6 +76,30 @@
         padding-right: 5px;
         padding-left: 5px;
       }
+      .temperature{
+        .temperature-content{
+          display: flex;
+          align-items: center;
+          justify-self: center;
+          p{
+            margin: 0;
+          }
+          div{
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 5px;
+            &.red{
+              background-color: #f44444;
+            }
+            &.green{
+              background-color: #25e125;
+            }
+
+          }
+
+        }
+      }
     }
   }
 }

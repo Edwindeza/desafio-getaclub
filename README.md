@@ -14,5 +14,6 @@ Listado de actividades a realizar
 7. Adicional algunos detalles
 
 ## Development server
-
+Clone with: git clone https://github.com/Edwindeza/desafio-getaclub.git
+Run `npm i`
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

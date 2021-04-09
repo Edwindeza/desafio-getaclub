@@ -5,7 +5,7 @@
   </div>
   <div class="count">
     <p>
-      Pacientes en riesgo: <b> {{filterDataRegister.length}} </b>
+      Pacientes en riesgo: <b> {{totalRiskregister}} </b>
     </p>
   </div>
   <div class="table">
@@ -36,12 +36,6 @@
       </ng-container>
     
       <!-- Symbol Column -->
-      <ng-container matColumnDef="temperatureForm">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperatura </th>
-        <td mat-cell *matCellDef="let element"> {{element.temperatureForm}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
       <ng-container matColumnDef="emailForm">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
         <td mat-cell *matCellDef="let element"> {{element.emailForm}} </td>
@@ -51,6 +45,18 @@
       <ng-container matColumnDef="phoneForm">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </th>
         <td mat-cell *matCellDef="let element"> {{element.phoneForm}} </td>
+      </ng-container>
+      
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="temperatureForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperatura </th>
+        <td mat-cell *matCellDef="let element" class="temperature"> 
+            <div class="temperature-content">
+              <p>{{element.temperatureForm}}</p>
+              <div *ngIf="(element.temperatureForm > 37)" class="red"></div>
+              <div *ngIf="(element.temperatureForm <= 37)" class="green"></div>
+            </div>
+        </td>
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
